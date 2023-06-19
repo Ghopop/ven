@@ -1,10 +1,10 @@
-// This is a slight modified version of the femboy plugin created by sdh.
+n// This is a slight modified version of the femboy plugin created by sdh.
 import { registerCommand } from "@vendetta/commands";
 import { logger } from "@vendetta";
 import Settings from "./settings";
 import { storage } from "@vendetta/plugin";
 
-const MessageActions = findByProps("sendMessage", "receiveMessage");
+const MessageActions = ("sendMessage", "receiveMessage");
 const Channels = findByProps('getLastSelectedChannelId');
 const BotMessage = findByProps('createBotMessage');
 const Avatars = findByProps("BOT_AVATARS");
