@@ -55,7 +55,7 @@ commands.push(registerCommand({
 
             let response;
             if (nsfw) {
-                response = await fetch(`https://purrbot.site/api/img/nsfw/solo/gif`).then(res => res.json());
+                response = await fetch(`https://api.waifu.pics/nsfw/blowjob`).then(res => res.json());
             } else {
                 response = await fetch(`https://api.waifu.pics/sfw/waifu`).then(res => res.json());
             }
@@ -73,7 +73,7 @@ commands.push(registerCommand({
                 }])
             } else {
                 MessageActions.sendMessage(ctx.channel.id, {
-                    content: response?.url
+                    content: response?.link
                 })
             }
 
