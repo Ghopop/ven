@@ -1,13 +1,11 @@
-n// This is a slight modified version of the femboy plugin created by sdh.
-import { registerCommand } from "@vendetta/commands";
-import { logger } from "@vendetta";
-import Settings from "./settings";
-import { storage } from "@vendetta/plugin";
+// Inspired by the ILoveFemboys Plugin
+import { registerCommand } from "@vendetta/commands"
+import { findByProps } from "@vendetta/metro"
 
-const MessageActions = ("sendMessage", "receiveMessage");
-const Channels = findByProps('getLastSelectedChannelId');
-const BotMessage = findByProps('createBotMessage');
-const Avatars = findByProps("BOT_AVATARS");
+const MessageActions = findByProps("sendMessage", "receiveMessage")
+const Channels = findByProps('getLastSelectedChannelId')
+const BotMessage = findByProps('createBotMessage')
+const Avatars = findByProps("BOT_AVATARS")
 
 function sendReply(channelID, content, embed) {
     const channel = channelID ?? Channels?.getChannelId?.();
@@ -25,74 +23,73 @@ function sendReply(channelID, content, embed) {
     MessageActions.receiveMessage(channel, msg);
 }
 
-let commands = [];
+let commands = []
 
 commands.push(registerCommand({
-    name: "kitsune",
-    displayName: "kitsune",
-    description: "Get an image of a kitsune or of a solo (NSFW)",
-    displayDescription: "Get an image of a kitsune or of a solo (NSFW)",
-    options: [
-        {
-            name: "nsfw",
-            displayName: "nsfw",
-            description: "Get NSFW image",
-            displayDescription: "Get NSFW image",
-            required: false,
-            type: 5
-        },
-        {
-            name: "silent",
-            displayName: "silent",
-            description: "Makes it so only you can see the message.",
-            displayDescription: "Makes it so only you can see the message.",
-            required: false,
-            type: 5
-        }
-    ],
+    name: "femboy",
+    displayName: "femboy",
+    description: "Get an image of a femboy",
+    displayDescription: "Get an image of a femboy",
+    options: [{
+        name: "nsfw",
+        displayName: "nsfw",
+        description: "Get the result from NSFW API",
+        displayDescription: "Get the result from NSFW API",
+        required: false,
+        type: 5
+    }, {
+        name: "silent",
+        displayName: "silent",
+        description: "Makes it so only you can see the message.",
+        displayDescription: "Makes it so only you can see the message.",
+        required: false,
+        type: 5
+    }],
     applicationId: "-1",
     inputType: 1,
     type: 1,
     execute: async (args, ctx) => {
         try {
-            let nsfw = args.find(arg => arg.name === "nsfw")?.value;
-            let silent = args.find(arg => arg.name === "silent")?.value;
-            let imageUrl = "";
+            let nsfw = args.find(arg => arg.name === "nsfw")?.value
+            let silent = args.find(arg => arg.name === "silent")?.value
 
-            if (!nsfw) {
-                imageUrl = "https://purrbot.site/api/img/sfw/kitsune/img";
+            let response;
+            if (nsfw) {
+                response = await fetch(`https://purrbot.site/api/img/nsfw/solo/gif`).then(res => res.json());
             } else {
-                imageUrl = "https://purrbot.site/api/img/nsfw/solo/gif";
+                response = await fetch(`https://api.waifu.pics/sfw/waifu`).then(res => res.json());
             }
 
             if (silent ?? true) {
-                sendReply(ctx.channel.id, "", [
-                    {
-                        type: "rich",
-                        image: {
-                            url: imageUrl
-                        },
-                        color: "0xf4b8e4"
-                    }
-                ]);
+                sendReply(ctx.channel.id, "", [{
+                    type: "rich",
+                    title: "Here's your image",
+                    image: {
+                        url: response?.url,
+                        width: 500, // You may need to adjust these values
+                        height: 500
+                    },
+                    color: "0xf4b8e4"
+                }])
             } else {
                 MessageActions.sendMessage(ctx.channel.id, {
-                    content: imageUrl
-                });
+                    content: response?.url
+                })
             }
+
         } catch (err) {
             logger.log(err);
-            sendReply(ctx.channel.id, "ERROR !!!!!!!!!!!! 😭😭😭 Check debug logs!! 🥺🥺🥺", []);
+            sendReply(ctx.channel.id, "ERROR !!!!!!!!!!!! 😭😭😭 Check debug logs!! 🥺🥺🥺", [])
         }
     }
-}));
+}))
 
 export const settings = Settings;
 
 export const onLoad = () => {
-    // Add any necessary initialization logic
-};
+    storage.nsfwwarn ??= true
+}
 
 export const onUnload = () => {
-    for (const unregisterCommands of commands) unregisterCommands();
-};
+    for (const unregisterCommands of commands) unregisterCommands()
+}
