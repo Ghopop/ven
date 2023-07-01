@@ -26,10 +26,10 @@ function sendReply(channelID, content, embed) {
 let commands = []
 
 commands.push(registerCommand({
-    name: "femboy",
-    displayName: "femboy",
-    description: "Get an image of a femboy",
-    displayDescription: "Get an image of a femboy",
+    name: "solo",
+    displayName: "solo",
+    description: "Get a gif of a Solo Lewd ;)",
+    displayDescription: "Get a gif of a Solo Lewd ;)",
     options: [{
         name: "nsfw",
         displayName: "nsfw",
