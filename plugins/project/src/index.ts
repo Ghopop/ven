@@ -84,12 +84,6 @@ commands.push(registerCommand({
     }
 }))
 
-export const settings = Settings;
-
-export const onLoad = () => {
-    storage.nsfwwarn ??= true
-}
-
 export const onUnload = () => {
     for (const unregisterCommands of commands) unregisterCommands()
 }
