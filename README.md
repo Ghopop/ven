@@ -4,4 +4,4 @@ Hello welcome to my page this is my first time working on a plugin and I hope to
 # Proxied
 
 # Not Proxied
-[Waifu](https://github.com/Ghopop/ven/tree/master/plugins/project))
+[Waifu](https://github.com/Ghopop/ven/tree/master/plugins/project)
