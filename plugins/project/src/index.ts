@@ -99,8 +99,8 @@ execute: async (args, ctx) => {
 commands.push(registerCommand({
     name: "hug",
     displayName: "hug",
-    description: "Get a SFW hug gif or img",
-    displayDescription: "Get a SFW hug gif or img",
+    description: "Get a SFW hug gif",
+    displayDescription: "Get a SFW hug gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -145,8 +145,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "bite",
     displayName: "bite",
-    description: "Get a SFW bite gif or img",
-    displayDescription: "Get a SFW bite gif or img",
+    description: "Get a SFW bite gif",
+    displayDescription: "Get a SFW bite gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -191,8 +191,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "angry",
     displayName: "angry",
-    description: "Get a SFW angry gif or img",
-    displayDescription: "Get a SFW angry gif or img",
+    description: "Get a SFW angry gif",
+    displayDescription: "Get a SFW angry gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -237,8 +237,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "blush",
     displayName: "blush",
-    description: "Get a SFW blush gif or img",
-    displayDescription: "Get a SFW blush gif or img",
+    description: "Get a SFW blush gif",
+    displayDescription: "Get a SFW blush gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -283,8 +283,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "comfy",
     displayName: "comfy",
-    description: "Get a SFW comfy gif or img",
-    displayDescription: "Get a SFW comfy gif or img",
+    description: "Get a SFW comfy gif",
+    displayDescription: "Get a SFW comfy gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -329,8 +329,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "cry",
     displayName: "cry",
-    description: "Get a SFW cry gif or img",
-    displayDescription: "Get a SFW cry gif or img",
+    description: "Get a SFW cry gif",
+    displayDescription: "Get a SFW cry gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -375,8 +375,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "tail",
     displayName: "tail",
-    description: "Get a SFW tail gif or img",
-    displayDescription: "Get a SFW tail gif or img",
+    description: "Get a SFW tail gif",
+    displayDescription: "Get a SFW tail gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -420,8 +420,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "cuddle",
     displayName: "cuddle",
-    description: "Get a SFW cuddle gif or img",
-    displayDescription: "Get a SFW cuddle gif or img",
+    description: "Get a SFW cuddle gif",
+    displayDescription: "Get a SFW cuddle gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -466,8 +466,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "dance",
     displayName: "dance",
-    description: "Get a SFW dance gif or img",
-    displayDescription: "Get a SFW dance gif or img",
+    description: "Get a SFW dance gif",
+    displayDescription: "Get a SFW dance gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -512,8 +512,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "fluff",
     displayName: "fluff",
-    description: "Get a SFW fluff gif or img",
-    displayDescription: "Get a SFW fluff gif or img",
+    description: "Get a SFW fluff gif",
+    displayDescription: "Get a SFW fluff gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -558,8 +558,8 @@ commands.push(registerCommand({
 commands.push(registerCommand({
     name: "pat",
     displayName: "pat",
-    description: "Get a SFW pat gif or img",
-    displayDescription: "Get a SFW pat gif or img",
+    description: "Get a SFW pat gif",
+    displayDescription: "Get a SFW pat gif",
     options: [{
         name: "silent",
         displayName: "silent",
@@ -600,58 +600,12 @@ commands.push(registerCommand({
     }
 }));
 
-// For 'pat' action
-commands.push(registerCommand({
-    name: "pat",
-    displayName: "pat",
-    description: "Get a SFW pat gif or img",
-    displayDescription: "Get a SFW pat gif or img",
-    options: [{
-        name: "silent",
-        displayName: "silent",
-        description: "Makes it so only you can see the message.",
-        displayDescription: "Makes it so only you can see the message.",
-        required: false,
-        type: 5
-    }],
-    applicationId: "-1",
-    inputType: 1,
-    type: 1,
-    execute: async (args, ctx) => {
-        try {
-            let silent = args.find(arg => arg.name === "silent")?.value;
-            let response = await fetch(`https://purrbot.site/api/list/sfw/pat`).then(res => res.json());
-            let url = response.url;
-
-            if (silent ?? true) {
-                sendReply(ctx.channel.id, "", [{
-                    type: "rich",
-                    title: "Here's your pat gif",
-                    image: {
-                        url: url,
-                        width: 500,
-                        height: 500
-                    },
-                    color: "0xf4b8e4"
-                }]);
-            } else {
-                MessageActions.sendMessage(ctx.channel.id, {
-                    content: url
-                });
-            }
-        } catch (err) {
-            console.error(err);
-            sendReply(ctx.channel.id, "ERROR: Check debug logs!", []);
-        }
-    }
-}))
-
 // For 'pout' action
 commands.push(registerCommand({
     name: "pout",
     displayName: "pout",
-    description: "Get a SFW pat gif or img",
-    displayDescription: "Get a SFW pat gif or img",
+    description: "Get a SFW pout gif",
+    displayDescription: "Get a SFW pout gif",
     options: [{
         name: "silent",
         displayName: "silent",
