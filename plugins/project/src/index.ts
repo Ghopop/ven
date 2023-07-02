@@ -48,24 +48,29 @@ commands.push(registerCommand({
     applicationId: "-1",
     inputType: 1,
     type: 1,
-    execute: async (args, ctx) => {
-        try {
-            let nsfw = args.find(arg => arg.name === "nsfw")?.value
-            let silent = args.find(arg => arg.name === "silent")?.value
+execute: async (args, ctx) => {
+    try {
+        let nsfw = args.find(arg => arg.name === "nsfw")?.value
+        let silent = args.find(arg => arg.name === "silent")?.value
 
-            let response;
-            if (nsfw) {
-                response = await fetch(`https://api.waifu.pics/nsfw/blowjob`).then(res => res.json());
-            } else {
-                response = await fetch(`https://api.waifu.pics/sfw/waifu`).then(res => res.json());
-            }
+        let response;
+        let url;
+        if (nsfw) {
+            response = await fetch(`https://purrbot.site/api/img/nsfw/solo/gif`).then(res => res.json());
+            url = response.link;
+        } else {
+            response = await fetch(`https://api.waifu.pics/sfw/waifu`).then(res => res.json());
+            url = response.url;
+        }
 
+        // Check if url is not undefined
+        if (url) {
             if (silent ?? true) {
                 sendReply(ctx.channel.id, "", [{
                     type: "rich",
                     title: "Here's your image",
                     image: {
-                        url: response?.url,
+                        url: url,
                         width: 500, // You may need to adjust these values
                         height: 500
                     },
@@ -73,15 +78,21 @@ commands.push(registerCommand({
                 }])
             } else {
                 MessageActions.sendMessage(ctx.channel.id, {
-                    content: response?.link
+                    content: url
                 })
             }
-
-        } catch (err) {
-            logger.log(err);
-            sendReply(ctx.channel.id, "ERROR !!!!!!!!!!!! 😭😭😭 Check debug logs!! 🥺🥺🥺", [])
+        } else {
+            // Handle the case where url is undefined
+            logger.log('URL is undefined');
+            sendReply(ctx.channel.id, "ERROR !!!!!!!!!!!! 😭😭😭 URL is undefined!! 🥺🥺🥺", [])
         }
+
+    } catch (err) {
+        logger.log(err);
+        sendReply(ctx.channel.id, "ERROR !!!!!!!!!!!! 😭😭😭 Check debug logs!! 🥺🥺🥺", [])
     }
+}
+
 }))
 
 export const onUnload = () => {
